@@ -1,0 +1,78 @@
+<!-- PORTOFOLIO -->
+
+<section id="portfolio" class="py-5 bg-white text-white" style="height: 100vh; background: url('images/27230.jpg') center/cover no-repeat; position: relative;">
+    <div class="container text-center" data-aos="fade-up">
+      <br><br><br><br><br><br>
+      <h2 class="fw-bold mb-4" style="color: red;">Mon Portfolio</h2>
+      <p class="mb-4" style="font-size: 20px;">Découvrez quelques-uns de mes projets réalisés</p>
+      <h2 class="mb-4">Soyez confiant ✔️</h2>
+      <br><br><br>
+  
+      <!-- Bouton pour ouvrir la fenêtre -->
+      <button type="button" class="btn btn-primary px-4 py-2" data-bs-toggle="modal" data-bs-target="#portfolioModal">
+        Voir mon Portfolio
+      </button>
+    </div>
+  </section>
+  
+  <div class="modal fade" id="portfolioModal" tabindex="-1" aria-labelledby="portfolioModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content shadow-lg">
+        <div class="modal-header bg-primary text-white">
+          <h5 class="modal-title" id="portfolioModalLabel">Mes Projets</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fermer"></button>
+        </div>
+  
+        <?php   // Paramètres de connexion à la base de données
+                      $serveur = "localhost"; // Adresse du serveur MySQL
+                      $utilisateur = "root"; // Nom d'utilisateur MySQL
+                      $motdepasse = ""; // Mot de passe MySQL
+                      $basededonnees = "portfolio"; // Nom de la base de données MySQL
+                          // Connexion à la base de données
+                          $conn = new mysqli($serveur, $utilisateur, $motdepasse, $basededonnees);
+  
+                          // Vérifier la connexion
+                          if ($conn->connect_error) {
+                              die("Échec de la connexion : " . $connexion->connect_error);
+                          }
+  
+                          $sql = "SELECT * FROM portfolio";
+                          $ventes = $conn->query($sql);
+                          ?>
+  
+  
+        <div class="modal-body bg-light">
+          <div class="row g-4">                    
+  
+            <div class="col-md-6">
+                <?php while ($vente = mysqli_fetch_assoc($ventes)) : ?>
+                    <div class="card h-100 shadow-sm border-0" enctype="multipart/form-data">
+                      <div>
+                            <?php if (!empty($vente['image'])) : 
+                                                ; ?>
+                                                <img src="uploads/<?= htmlspecialchars($vente['image'])?>" class="card-img-top" alt="Projet Mentorium">
+                                            <?php else : ?>
+                                                <p>Pas d’image</p>
+                                            <?php endif; ?>
+                      </div>
+                      
+                      <div class="card-body">
+                        <h5 class="card-title"><?= htmlspecialchars($vente['nom']) ?></h5>
+                        <p class="card-text"><?= htmlspecialchars($vente['description']) ?></p>
+                        <a href="<?= htmlspecialchars($vente['lien']) ?>" class="btn btn-outline-danger btn-sm bg-danger text-white">Visiter</a>
+                      </div>
+                    </div>
+                <?php endwhile; ?>
+            </div>
+  
+          </div>
+        </div>
+  
+        <div class="modal-footer bg-white">
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fermer</button>
+        </div>
+  
+  
+  <!-- Bootstrap JavaScript Bundle (important !) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  
